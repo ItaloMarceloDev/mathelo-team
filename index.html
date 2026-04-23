@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathelo Team – Jiu-Jitsu · K1 · Submission · Boxe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="icon" type="image/x-icon" href="/assets/icons/favicon/logo.ico">
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- WhatsApp Float -->
+<a class="wa-float" href="https://wa.me/5537999999999?text=Olá!%20Vi%20o%20site%20da%20Mathelo%20Team%20e%20gostaria%20de%20mais%20informações!" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span>Falar no WhatsApp</span>
+</a>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">MATHELO <span>TEAM</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#modalidades">Modalidades</a></li>
+    <li><a href="#horarios">Horários</a></li>
+    <li><a href="#planos">Planos</a></li>
+    <li><a href="#professores">Professores</a></li>
+    <li><a href="#contato" class="nav-cta">Matricule-se</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-orb" id="heroOrb"></div>
+  <div class="hero-orb2" id="heroOrb2"></div>
+  <div class="hero-hex" id="heroHex"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Academia de Artes Marciais – Divinópolis/MG</p>
+    <h1 class="hero-title glitch" data-text="MATHELO"><span class="red">MATHELO</span><br>TEAM</h1>
+    <p class="hero-subtitle">Jiu-Jitsu · K1 Rules · Submission · Boxe</p>
+    <div class="hero-divider"></div>
+    <div class="hero-btns">
+      <a href="https://wa.me/5537999999999?text=Olá!%20Quero%20agendar%20minha%20AULA%20EXPERIMENTAL%20GRATUITA%20na%20Mathelo%20Team!" target="_blank" rel="noopener" class="btn-wa">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Aula Experimental Grátis
+      </a>
+      <a href="#modalidades" class="btn-outline">Nossas Modalidades</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="ticker-item">Jiu-Jitsu</span><span class="ticker-item">K1 Rules</span><span class="ticker-item">Submission Wrestling</span><span class="ticker-item">Boxe</span><span class="ticker-item">Condicionamento</span><span class="ticker-item">Kids &amp; Teens</span><span class="ticker-item">Competição</span>
+    <span class="ticker-item">Jiu-Jitsu</span><span class="ticker-item">K1 Rules</span><span class="ticker-item">Submission Wrestling</span><span class="ticker-item">Boxe</span><span class="ticker-item">Condicionamento</span><span class="ticker-item">Kids &amp; Teens</span><span class="ticker-item">Competição</span>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="sobre-logo-wrap" id="sobreLogo">
+    <div class="sobre-logo-ring">
+      <img src="/assets/img/logo/logo.png" alt="Mathelo Team"
+        onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<div style=\'width:260px;height:260px;border-radius:50%;background:linear-gradient(135deg,#1a0000,#3d0000);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px\'><div style=\'font-family:Bebas Neue,sans-serif;font-size:34px;letter-spacing:6px;color:#CC0000\'>MATHELO</div><div style=\'font-family:Bebas Neue,sans-serif;font-size:20px;letter-spacing:8px;color:#f5f5f5\'>TEAM</div></div>')">
+    </div>
+  </div>
+  <div class="sobre-text reveal-right">
+    <p class="section-label">Quem Somos</p>
+    <h2 class="section-title">FORJADOS<br>NO TATAME</h2>
+    <p>A Mathelo Team é uma academia de artes marciais comprometida com a excelência técnica, disciplina e desenvolvimento humano. Aqui, formamos atletas e cidadãos, respeitando cada grau de evolução.</p>
+    <p>Com professores experientes e ambiente acolhedor, oferecemos o melhor do Jiu-Jitsu, K1 Rules, Submission e Boxe para todas as idades e níveis.</p>
+    <div class="sobre-stats stagger">
+      <div class="stat"><div class="stat-num" data-target="40">0</div><div class="stat-label">Anos de experiência</div></div>
+      <div class="stat"><div class="stat-num" data-target="50">0</div><div class="stat-label">Alunos ativos</div></div>
+      <div class="stat"><div class="stat-num" data-target="30">0</div><div class="stat-label">Títulos conquistados</div></div>
+    </div>
+    <div class="sobre-cta">
+      <a href="https://wa.me/5537984038588?text=Olá!%20Vi%20o%20site%20da%20Mathelo%20Team%20e%20quero%20conhecer%20a%20academia!" target="_blank" rel="noopener" class="btn-wa">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Fale com a gente
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- MODALIDADES -->
+<section id="modalidades">
+  <div class="modalidades-header reveal">
+    <div>
+      <p class="section-label">O que oferecemos</p>
+      <h2 class="section-title">MODALIDADES</h2>
+    </div>
+  </div>
+  <div class="modalidades-grid stagger">
+    <div class="modalidade-card">
+      <span class="modalidade-number">01</span><span class="modalidade-icon"><img src="/assets/icons/modalidades/jiujitsu.png" alt="img-jiujitsu"></span>
+      <h3 class="modalidade-title">Jiu-Jitsu Brasileiro</h3>
+      <p class="modalidade-desc">A arte suave que transforma. Técnica, estratégia e resistência no tatame. Do iniciante ao competidor de alto nível. Aulas exclusivas terça e quinta às 20h.</p>
+      <span class="modalidade-tag">Gi &amp; No-Gi · Ter/Qui 20h</span>
+    </div>
+    <div class="modalidade-card">
+      <span class="modalidade-number">02</span><span class="modalidade-icon"><img src="/assets/icons/modalidades/kickboxing.png" alt="img-kickboxing"></span>
+      <h3 class="modalidade-title">Kickboxin & K1 Rules</h3>
+      <p class="modalidade-desc">Kickboxing profissional com regras K1. Socos, chutes e joelhadas em todos os turnos, de segunda a sexta — manhã, tarde e noite.</p>
+      <span class="modalidade-tag">Seg–Sex · 3 Turnos</span>
+    </div>
+    <div class="modalidade-card">
+      <span class="modalidade-number">03</span><span class="modalidade-icon"><img src="/assets/icons/modalidades/wrestling.png" alt="img-wrestling"></span>
+      <h3 class="modalidade-title">Submission Wrestling</h3>
+      <p class="modalidade-desc">Domínio total no chão sem quimono. Aulas juntas ao Jiu-Jitsu, com foco em finalizações e wrestling de alto nível.</p>
+      <span class="modalidade-tag">No-Gi · Ter/Qui 20h</span>
+    </div>
+    <div class="modalidade-card">
+      <span class="modalidade-number">04</span><span class="modalidade-icon"><img src="/assets/icons/modalidades/boxing.png" alt="img-boxing"></span>
+      <h3 class="modalidade-title">Boxe</h3>
+      <p class="modalidade-desc">A nobre arte dos punhos. Técnica, movimento e esquivas. Disponível em todos os turnos de segunda a sexta. Infantil 3x por semana.</p>
+      <span class="modalidade-tag">Seg–Sex · 3 Turnos</span>
+    </div>
+  </div>
+  <div class="modalidades-cta reveal">
+    <a href="https://wa.me/5537984038588?text=Olá!%20Vi%20as%20modalidades%20no%20site%20e%20quero%20saber%20qual%20é%20a%20melhor%20opção%20para%20mim!" target="_blank" rel="noopener" class="btn-wa">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Tirar dúvidas sobre as modalidades
+    </a>
+  </div>
+</section>
+
+<!-- HORÁRIOS -->
+<section id="horarios">
+  <div class="reveal">
+    <p class="section-label">Grade Semanal</p>
+    <h2 class="section-title">HORÁRIOS</h2>
+    <div class="horarios-legend">
+      <span class="legend-item"><span class="legend-dot am"></span>Boxe / Kickboxing / K1</span>
+      <span class="legend-item"><span class="legend-dot jj"></span>Jiu-Jitsu + Submission</span>
+      <span class="legend-item"><span class="legend-dot kids"></span>Aulas Infantis</span>
+    </div>
+  </div>
+
+  <div class="horarios-tabs reveal">
+    <div class="htab active" data-tab="manha">☀️ Manhã</div>
+    <div class="htab" data-tab="tarde">🌤 Tarde</div>
+    <div class="htab" data-tab="noite">🌙 Noite</div>
+  </div>
+
+  <!-- MANHÃ 07:00–11:00 -->
+  <div id="tab-manha" class="htab-content active">
+    <table class="horario-table">
+      <thead><tr><th>Horário</th><th>Segunda</th><th>Terça</th><th>Quarta</th><th>Quinta</th><th>Sexta</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="time-col">07:00 – 11:00</td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><div class="cell-wrap"><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></div></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><div class="cell-wrap"><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></div></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+        </tr>
+        <tr>
+          <td class="time-col">09:00 – 10:00</td>
+          <td><span style="color:rgba(255,255,255,0.2);font-size:12px;font-style:italic;">—</span></td>
+          <td><span class="slot-pill slot-kids"><img src="/assets/icons/horarios/crianca.png" alt="" height="15px"> Infantil</span></td>
+          <td><span style="color:rgba(255,255,255,0.2);font-size:12px;font-style:italic;">—</span></td>
+          <td><span class="slot-pill slot-kids"><img src="/assets/icons/horarios/crianca.png" alt="" height="15px"> Infantil</span></td>
+          <td><span class="slot-pill slot-kids"><img src="/assets/icons/horarios/crianca.png" alt="" height="15px"> Infantil</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="horarios-note"><strong>Turno da manhã:</strong> 07h às 11h, de segunda a sexta. Boxe e K1 todos os dias. <strong>Aulas infantis às terças, quintas e sextas das 09h às 10h.</strong></div>
+  </div>
+
+  <!-- TARDE 14:00–16:00 -->
+  <div id="tab-tarde" class="htab-content">
+    <table class="horario-table">
+      <thead><tr><th>Horário</th><th>Segunda</th><th>Terça</th><th>Quarta</th><th>Quinta</th><th>Sexta</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="time-col">14:00 – 16:00</td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+        </tr>
+        <tr>
+          <td class="time-col">14:30 – 15:30</td>
+          <td><span style="color:rgba(255,255,255,0.2);font-size:12px;font-style:italic;">—</span></td>
+          <td><span class="slot-pill slot-kids"><img src="/assets/icons/horarios/crianca.png" alt="" height="15px"> Infantil</span></td>
+          <td><span style="color:rgba(255,255,255,0.2);font-size:12px;font-style:italic;">—</span></td>
+          <td><span class="slot-pill slot-kids"><img src="/assets/icons/horarios/crianca.png" alt="" height="15px"> Infantil</span></td>
+          <td><span class="slot-pill slot-kids"><img src="/assets/icons/horarios/crianca.png" alt="" height="15px"> Infantil</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="horarios-note"><strong>Turno da tarde:</strong> 14h às 16h, de segunda a sexta. Boxe e K1 todos os dias. <strong>Aulas infantis às terças, quintas e sextas das 14h30 às 15h30.</strong></div>
+  </div>
+
+  <!-- NOITE 17:30–21:00 -->
+  <div id="tab-noite" class="htab-content">
+    <table class="horario-table">
+      <thead><tr><th>Horário</th><th>Segunda</th><th>Terça</th><th>Quarta</th><th>Quinta</th><th>Sexta</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="time-col">17:30 – 21:00</td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+          <td><span class="slot-pill slot-am"><img src="/assets/icons/horarios/boxe.png" alt="" height="15px"> Boxe / K1</span></td>
+        </tr>
+        <tr>
+          <td class="time-col">18:00 – 19:00</td>
+          <td><span style="color:rgba(255,255,255,0.2);font-size:12px;font-style:italic;">—</span></td>
+          <td><span class="slot-pill slot-kids"><img src="/assets/icons/horarios/crianca.png" alt="" height="15px"> Infantil</span></td>
+          <td><span style="color:rgba(255,255,255,0.2);font-size:12px;font-style:italic;">—</span></td>
+          <td><span class="slot-pill slot-kids"><img src="/assets/icons/horarios/crianca.png" alt="" height="15px"> Infantil</span></td>
+          <td><span class="slot-pill slot-kids"><img src="/assets/icons/horarios/crianca.png" alt="" height="15px"> Infantil</span></td>
+        </tr>
+        <tr>
+          <td class="time-col" style="color:var(--white);font-weight:600;">20:00 – 21:00</td>
+          <td><span style="color:rgba(255,255,255,0.2);font-size:12px;font-style:italic;">—</span></td>
+          <td><span class="slot-pill slot-jj"><img src="/assets/icons/horarios/quimono.png" alt="" height="15px"> Jiu-Jitsu + Sub</span></td>
+          <td><span style="color:rgba(255,255,255,0.2);font-size:12px;font-style:italic;">—</span></td>
+          <td><span class="slot-pill slot-jj"><img src="/assets/icons/horarios/quimono.png" alt="" height="15px"> Jiu-Jitsu + Sub</span></td>
+          <td><span style="color:rgba(255,255,255,0.2);font-size:12px;font-style:italic;">—</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="horarios-note"><strong>Turno da noite:</strong> 17h30 às 21h, de segunda a sexta. Boxe e K1 todos os dias. <strong>Jiu-Jitsu + Submission Wrestling somente às terças e quintas às 20h.</strong> Aulas infantis às terças, quintas e sextas das 18h às 19h.</div>
+  </div>
+
+  <div class="horarios-cta reveal">
+    <a href="https://wa.me/5537984038588?text=Olá!%20Vi%20os%20horários%20no%20site%20e%20quero%20saber%20qual%20turno%20se%20encaixa%20melhor%20na%20minha%20rotina!" target="_blank" rel="noopener" class="btn-wa">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Encontrar meu horário ideal
+    </a>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section id="planos">
+  <div class="reveal" style="text-align:center;">
+    <p class="section-label" style="justify-content:center;">Invista em Você</p>
+    <h2 class="section-title">NOSSOS PLANOS</h2>
+  </div>
+  <div class="planos-grid stagger">
+    <div class="plano-card">
+      <div class="plano-name">Iniciante</div>
+      <div class="plano-price"><sup>R$</sup>119,90<sub>/mês</sub></div>
+      <div class="plano-divider"></div>
+      <ul class="plano-features">
+        <li>1 Modalidade à escolha</li>
+        <li>Acesso 2x por semana</li>
+        <li>Vestiário completo</li>
+        <li class="off">Modalidades extras</li>
+        <li class="off">Área de musculação</li>
+      </ul>
+      <a href="https://wa.me/5537984038588?text=Olá!%20Tenho%20interesse%20no%20*Plano%20Iniciante*%20da%20Mathelo%20Team.%20Podem%20me%20ajudar?" target="_blank" rel="noopener" class="plano-btn">Escolher Plano</a>
+    </div>
+    <div class="plano-card destaque">
+      <div class="plano-badge">Mais Popular</div>
+      <div class="plano-name">Guerreiro</div>
+      <div class="plano-price"><sup>R$</sup>199,90<sub>/mês</sub></div>
+      <div class="plano-divider"></div>
+      <ul class="plano-features">
+        <li>2 Modalidades à escolha</li>
+        <li>Acesso ilimitado</li>
+        <li>Vestiário completo</li>
+        <li>Área de musculação</li>
+        <li class="off">Equipe de competição</li>
+      </ul>
+      <a href="https://wa.me/5537984038588?text=Olá!%20Tenho%20interesse%20no%20*Plano%20Guerreiro*%20da%20Mathelo%20Team.%20Podem%20me%20ajudar?" target="_blank" rel="noopener" class="plano-btn">Escolher Plano</a>
+    </div>
+    <div class="plano-card">
+      <div class="plano-name">Campeão</div>
+      <div class="plano-price"><sup>R$</sup>249,90<sub>/mês</sub></div>
+      <div class="plano-divider"></div>
+      <ul class="plano-features">
+        <li>Todas as modalidades</li>
+        <li>Acesso ilimitado</li>
+        <li>Vestiário completo</li>
+        <li>Área de musculação</li>
+        <li>Equipe de competição</li>
+      </ul>
+      <a href="https://wa.me/5537984038588?text=Olá!%20Tenho%20interesse%20no%20*Plano%20Campeão*%20da%20Mathelo%20Team.%20Podem%20me%20ajudar?" target="_blank" rel="noopener" class="plano-btn">Escolher Plano</a>
+    </div>
+  </div>
+</section>
+
+<!-- BANNER CTA -->
+<div class="banner-cta">
+  <div class="banner-cta-text reveal-left">
+    <h3>SUA PRIMEIRA AULA<br>É GRATUITA</h3>
+    <p>Venha conhecer a Mathelo Team sem compromisso. Experimente e sinta a diferença.</p>
+  </div>
+  <div class="banner-cta-btn reveal-right">
+    <a href="https://wa.me/5537984038588?text=Olá!%20Gostaria%20de%20agendar%20uma%20AULA%20EXPERIMENTAL%20na%20Mathelo%20Team!%20Qual%20o%20próximo%20passo?" target="_blank" rel="noopener" class="btn-wa" style="font-size:16px;padding:16px 36px;">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Agendar Sua Aula Experimental Agora
+    </a>
+  </div>
+</div>
+
+<!-- PROFESSORES -->
+<section id="professores">
+  <div class="reveal"><p class="section-label">Nossa Equipe</p><h2 class="section-title">PROFESSORES</h2></div>
+  <div class="prof-grid stagger">
+    <div class="prof-card"><div class="prof-img"><img src="/assets/img/professores/mathelo.png" alt="Marcelo de Oliveira"><div class="prof-overlay"><div class="prof-belt"><div class="belt-stripe" style="background:#000;width:40px;"></div><div class="belt-stripe" style="background:#CC0000;"></div><div class="belt-stripe" style="background:#CC0000;"></div></div><div class="prof-name">Marcelo de Oliveira</div><div class="prof-role">Fundador · Faixa Preta 2° Grau</div><p class="prof-desc">Fundador da Mathelo Team com mais de 30 anos de experiência. Campeão estadual e nacional de Kickboxing.</p></div></div></div>
+    <div class="prof-card"><div class="prof-img"><img src="/assets/img/professores/vitor-dias.png" alt="Vitor Dias"><div class="prof-overlay"><div class="prof-belt"><div class="belt-stripe" style="background:#000;width:40px;"></div><div class="belt-stripe" style="background:#CC0000;"></div></div><div class="prof-name">Vitor Dias</div><div class="prof-role">Professor Infantil· K1 &amp; Boxe</div><p class="prof-desc">Atleta amador de Boxe e Kickboxing, com carreira de 6 anos em competições regionais.</p></div></div></div>
+    <div class="prof-card"><div class="prof-img"><img src="/assets/img/professores/notfound.png" alt="?"><div class="prof-overlay"><div class="prof-belt"><div class="belt-stripe" style="background:#000;width:40px;"></div></div><div class="prof-name">Not Found</div><div class="prof-role">????? · ??????</div><p class="prof-desc">Not found.</p></div></img></div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria">
+  <div style="padding:0 60px;">
+    <p class="section-label reveal">Nossa Academia</p>
+    <h2 class="section-title reveal">GALERIA</h2>
+    <p class="reveal" style="font-family:'Barlow Condensed',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gray);margin-top:10px;text-transform:uppercase;">Arraste para explorar</p>
+  </div>
+  <div class="galeria-outer" id="galeriaOuter">
+    <div class="galeria-track" id="galeriaTrack">
+      <div class="galeria-item" data-label="Treino de Jiu-Jitsu" style="background:linear-gradient(135deg,#1a0000,#2d0808);">🥋</div>
+      <div class="galeria-item" data-label="K1 Rules" style="background:linear-gradient(135deg,#0d0d0d,#1a0000);">🥊</div>
+      <div class="galeria-item" data-label="Competição" style="background:linear-gradient(135deg,#1a0505,#3d0000);">🏆</div>
+      <div class="galeria-item" data-label="Boxe" style="background:linear-gradient(135deg,#0a0000,#220000);">💪</div>
+      <div class="galeria-item" data-label="Kids &amp; Teens" style="background:linear-gradient(135deg,#1a0000,#2d0808);">👊</div>
+      <div class="galeria-item" data-label="Equipe" style="background:linear-gradient(135deg,#0d0000,#1f0000);">⚔️</div>
+      <!-- duplicates for infinite loop -->
+      <div class="galeria-item" data-label="Treino de Jiu-Jitsu" style="background:linear-gradient(135deg,#1a0000,#2d0808);">🥋</div>
+      <div class="galeria-item" data-label="K1 Rules" style="background:linear-gradient(135deg,#0d0d0d,#1a0000);">🥊</div>
+      <div class="galeria-item" data-label="Competição" style="background:linear-gradient(135deg,#1a0505,#3d0000);">🏆</div>
+      <div class="galeria-item" data-label="Boxe" style="background:linear-gradient(135deg,#0a0000,#220000);">💪</div>
+      <div class="galeria-item" data-label="Kids &amp; Teens" style="background:linear-gradient(135deg,#1a0000,#2d0808);">👊</div>
+      <div class="galeria-item" data-label="Equipe" style="background:linear-gradient(135deg,#0d0000,#1f0000);">⚔️</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="contato-info reveal-left">
+    <p class="section-label">Fale Conosco</p>
+    <h2 class="section-title">VENHA<br>TREINAR</h2>
+    <div class="info-item"><div class="info-icon"><img class="info-img" src="/assets/icons/ui/localizacao.png"></div><div><div class="info-label">Endereço</div><div class="info-text">Rua João Dias, 620 - Interlagos<br>Divinópolis – MG</div></div></div>
+    <div class="info-item"><div class="info-icon"><img class="info-img" src="/assets/icons/contato/whatsapp.svg" alt=""></div><div><div class="info-label">WhatsApp</div><div class="info-text"><a href="https://wa.me/5537984038588" target="_blank" rel="noopener" style="color:#25D366;text-decoration:none;">(37) 98403-8588</a></div></div></div>
+    <div class="info-item"><div class="info-icon"><img class="info-img" src="/assets/icons/ui/horario.png" alt=""></div><div><div class="info-label">Funcionamento</div><div class="info-text">Seg–Sex: 07h–11h | 14h–16h | 17h30–21h</div></div></div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/academiamatheloteam/" class="social-link"><img src="/assets/icons/contato/instagram.svg" alt="icon-instagram"></a>
+      <a href="https://www.facebook.com/ctmatheloteam/" class="social-link"><img src="/assets/icons/contato/facebook.svg" alt="icon-facebook"></a>
+      <a href="https://www.youtube.com/@academiamatheloteam" class="social-link"><img src="/assets/icons/contato/youtube.svg" alt="icon-youtube"></a>
+      <a href="https://wa.me/5537984038588" target="_blank" rel="noopener" class="social-link"><img src="/assets/icons/contato/whatsapp.svg" alt="icon-whatsapp"></a>
+    </div>
+  </div>
+  <div id="matricula" class="reveal-right">
+    <p class="section-label">Primeira aula gratuita</p>
+    <h3 class="section-title" style="font-size:36px;">MATRICULE-SE</h3>
+    <form id="contatoForm" class="contato-form">
+      <div class="form-row">
+        <div class="form-group"><label>Nome Completo</label><input type="text" id="fNome" placeholder="Seu nome" required></div>
+        <div class="form-group"><label>Idade</label><input type="number" placeholder="Sua idade" min="4" max="80"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>WhatsApp</label><input type="tel" id="fTel" placeholder="(37) 99999-9999"></div>
+        <div class="form-group"><label>E-mail</label><input type="email" placeholder="seu@email.com"></div>
+      </div>
+      <div class="form-group">
+        <label>Modalidade de Interesse</label>
+        <select id="fModalidade">
+          <option value="">Selecione...</option>
+          <option>Jiu-Jitsu Brasileiro</option>
+          <option>K1 Rules</option>
+          <option>Submission Wrestling</option>
+          <option>Boxe</option>
+          <option>Aulas Infantis</option>
+          <option>Combo – Múltiplas Modalidades</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Turno de Preferência</label>
+        <select id="fTurno">
+          <option value="">Selecione...</option>
+          <option>Manhã (07h–11h)</option>
+          <option>Tarde (14h–16h)</option>
+          <option>Noite (17h30–21h)</option>
+        </select>
+      </div>
+      <button type="submit" class="form-submit">QUERO TREINAR AGORA</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MATHELO <span>TEAM</span></div>
+  <div class="footer-text">Jiu-Jitsu · K1 Rules · Submission · Boxe · Divinópolis–MG</div>
+  <div class="footer-copy">© 2025 Mathelo Team. Todos os direitos reservados.</div>
+</footer>
+
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:30px;left:30px;z-index:9999;background:#25D366;color:white;padding:16px 28px;font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:2px;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);transform:translateY(100px);opacity:0;transition:transform 0.4s,opacity 0.4s;pointer-events:none;">ABRINDO WHATSAPP ✓</div>
+
+<script type="module" src="/javascript/script.js"></script>
+</body>
+</html>
