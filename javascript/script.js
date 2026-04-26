@@ -120,157 +120,89 @@ document.querySelectorAll('.htab').forEach(btn => {
   btn.addEventListener('click', () => switchTab(btn.dataset.tab, btn));
 });
 
-// ─── GALERIA DRAG SCROLL (carrossel dinâmico) ───
+// ─── GALERIA: marquee CSS-driven (GPU/compositor) ───
+// Antes: requestAnimationFrame infinito + scrollLeft + drag/momentum custosos.
+// Agora: animação CSS sobre transform (compositor thread), pausada via classe
+//        quando offscreen ou em hover/touch. Muito menos main-thread work.
 const galeriaOuter = document.getElementById('galeriaOuter');
 const galeriaTrack = document.getElementById('galeriaTrack');
 
-// Snapshot dos itens originais declarados no HTML (fonte da verdade para clonagem)
-const galeriaOriginals = Array.from(galeriaTrack.children);
-const galeriaOriginalCount = galeriaOriginals.length;
-let galeriaCycleWidth = 0;
+if (galeriaOuter && galeriaTrack) {
+  const galeriaOriginals = Array.from(galeriaTrack.children).filter(el => !el.dataset?.clone);
 
-function galeriaGap(){
-  const s = getComputedStyle(galeriaTrack);
-  return parseFloat(s.columnGap || s.gap) || 0;
-}
-
-function galeriaCloneOnce(){
-  galeriaOriginals.forEach(item => {
-    const clone = item.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    clone.dataset.clone = 'true';
-    clone.querySelectorAll('img').forEach(img => img.loading = 'eager');
-    galeriaTrack.appendChild(clone);
-  });
-}
-
-function galeriaRemoveClones(){
-  galeriaTrack.querySelectorAll('[data-clone="true"]').forEach(el => el.remove());
-}
-
-function galeriaMeasureCycleWidth(){
-  const gap = galeriaGap();
-  const items = galeriaTrack.children;
-  let w = 0;
-  for (let i = 0; i < galeriaOriginalCount && i < items.length; i++){
-    w += items[i].offsetWidth + gap;
+  function galeriaGap() {
+    const s = getComputedStyle(galeriaTrack);
+    return parseFloat(s.columnGap || s.gap) || 0;
   }
-  galeriaCycleWidth = w;
-}
 
-function galeriaFillTrack(){
-  if (galeriaOriginalCount === 0) return;
-  galeriaRemoveClones();
-  const minWidth = Math.max(galeriaOuter.offsetWidth * 2, 1);
-  let safety = 30;
-  galeriaCloneOnce();
-  while (galeriaTrack.scrollWidth < minWidth && safety-- > 0){
+  function galeriaRemoveClones() {
+    galeriaTrack.querySelectorAll('[data-clone="true"]').forEach(el => el.remove());
+  }
+
+  function galeriaCloneOnce() {
+    const frag = document.createDocumentFragment();
+    galeriaOriginals.forEach(item => {
+      const clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.dataset.clone = 'true';
+      clone.querySelectorAll('img').forEach(img => { img.loading = 'eager'; });
+      frag.appendChild(clone);
+    });
+    galeriaTrack.appendChild(frag);
+  }
+
+  function galeriaMeasureCycle() {
+    const gap = galeriaGap();
+    const cycle = galeriaOriginals.reduce((sum, el) => sum + el.offsetWidth + gap, 0);
+    if (cycle <= 0) return;
+    galeriaTrack.style.setProperty('--galeria-cycle', cycle + 'px');
+    // velocidade alvo (px/s): mais lento em telas pequenas para conforto visual
+    const speed = window.innerWidth < 640 ? 40 : 70;
+    galeriaTrack.style.setProperty('--galeria-duration', (cycle / speed).toFixed(2) + 's');
+  }
+
+  function galeriaSetup() {
+    galeriaRemoveClones();
     galeriaCloneOnce();
+    galeriaMeasureCycle();
   }
-  galeriaMeasureCycleWidth();
+
+  galeriaSetup();
+  window.addEventListener('load', galeriaSetup);
+
+  // Recalcula quando imagens carregarem (largura real)
+  galeriaTrack.querySelectorAll('img').forEach(img => {
+    if (!img.complete) img.addEventListener('load', galeriaMeasureCycle, { once: true });
+  });
+
+  // Re-medição em resize (debounced)
+  let galeriaResizeT;
+  window.addEventListener('resize', () => {
+    clearTimeout(galeriaResizeT);
+    galeriaResizeT = setTimeout(galeriaSetup, 180);
+  });
+
+  // Pausa quando a seção sai do viewport (zero CPU/GPU enquanto offscreen)
+  const galeriaIO = new IntersectionObserver(entries => {
+    entries.forEach(e => galeriaTrack.classList.toggle('is-paused', !e.isIntersecting));
+  }, { threshold: 0 });
+  galeriaIO.observe(galeriaOuter);
+
+  // Pausa em hover (desktop)
+  galeriaOuter.addEventListener('mouseenter', () => galeriaTrack.classList.add('is-paused'));
+  galeriaOuter.addEventListener('mouseleave', () => galeriaTrack.classList.remove('is-paused'));
+
+  // Pausa em touch (mobile) — retoma 1.8s após o fim do toque
+  let galeriaTouchT;
+  galeriaOuter.addEventListener('touchstart', () => {
+    clearTimeout(galeriaTouchT);
+    galeriaTrack.classList.add('is-paused');
+  }, { passive: true });
+  galeriaOuter.addEventListener('touchend', () => {
+    clearTimeout(galeriaTouchT);
+    galeriaTouchT = setTimeout(() => galeriaTrack.classList.remove('is-paused'), 1800);
+  }, { passive: true });
 }
-
-function galeriaNormalizeScroll(){
-  if (galeriaCycleWidth <= 0) return;
-  while (galeriaOuter.scrollLeft >= galeriaCycleWidth) galeriaOuter.scrollLeft -= galeriaCycleWidth;
-  while (galeriaOuter.scrollLeft < 0) galeriaOuter.scrollLeft += galeriaCycleWidth;
-}
-
-galeriaFillTrack();
-window.addEventListener('load', galeriaFillTrack);
-galeriaTrack.querySelectorAll('img').forEach(img => {
-  if (!img.complete) img.addEventListener('load', galeriaFillTrack, { once: true });
-});
-
-let galeriaResizeRaf;
-window.addEventListener('resize', () => {
-  cancelAnimationFrame(galeriaResizeRaf);
-  galeriaResizeRaf = requestAnimationFrame(galeriaFillTrack);
-});
-
-const galeriaObserver = new MutationObserver(muts => {
-  const relevant = muts.some(m => Array.from(m.addedNodes).some(n =>
-    n.nodeType === 1 && !n.dataset?.clone
-  ));
-  if (relevant){
-    galeriaOriginals.length = 0;
-    Array.from(galeriaTrack.children)
-      .filter(el => !el.dataset.clone)
-      .forEach(el => galeriaOriginals.push(el));
-    galeriaFillTrack();
-  }
-});
-galeriaObserver.observe(galeriaTrack, { childList: true });
-
-let isDragging=false, startX=0, scrollLeft=0, velocity=0, lastX=0, rafId;
-const AUTO_SPEED = window.innerWidth<640 ? 0.5 : 0.7;
-let autoScroll = true;
-let dragMomentum = 0;
-
-function galeriaAutoScroll(){
-  if(!isDragging && autoScroll && galeriaCycleWidth > 0){
-    galeriaOuter.scrollLeft += AUTO_SPEED;
-    galeriaNormalizeScroll();
-  }
-  requestAnimationFrame(galeriaAutoScroll);
-}
-galeriaAutoScroll();
-
-galeriaOuter.addEventListener('mousedown',e=>{
-  isDragging=true; autoScroll=false;
-  startX=e.pageX-galeriaOuter.offsetLeft;
-  scrollLeft=galeriaOuter.scrollLeft;
-  lastX=e.pageX; velocity=0;
-  galeriaOuter.style.cursor='grabbing';
-  cancelAnimationFrame(rafId);
-});
-document.addEventListener('mouseup',()=>{
-  if(!isDragging)return;
-  isDragging=false;
-  galeriaOuter.style.cursor='grab';
-  dragMomentum=velocity;
-  function decelerate(){
-    galeriaOuter.scrollLeft+=dragMomentum;
-    dragMomentum*=0.92;
-    galeriaNormalizeScroll();
-    if(Math.abs(dragMomentum)>0.3) rafId=requestAnimationFrame(decelerate);
-    else { autoScroll=true; }
-  }
-  rafId=requestAnimationFrame(decelerate);
-});
-document.addEventListener('mousemove',e=>{
-  if(!isDragging)return;
-  e.preventDefault();
-  const x=e.pageX-galeriaOuter.offsetLeft;
-  const walk=(x-startX)*1.2;
-  velocity=e.pageX-lastX; lastX=e.pageX;
-  galeriaOuter.scrollLeft=scrollLeft-walk;
-});
-
-galeriaOuter.addEventListener('touchstart',e=>{
-  isDragging=true; autoScroll=false;
-  startX=e.touches[0].pageX; scrollLeft=galeriaOuter.scrollLeft; lastX=startX; velocity=0;
-},{passive:true});
-galeriaOuter.addEventListener('touchmove',e=>{
-  if(!isDragging)return;
-  const x=e.touches[0].pageX;
-  galeriaOuter.scrollLeft=scrollLeft-(x-startX);
-  velocity=x-lastX; lastX=x;
-},{passive:true});
-galeriaOuter.addEventListener('touchend',()=>{
-  isDragging=false;
-  dragMomentum=velocity;
-  function dec(){
-    galeriaOuter.scrollLeft+=dragMomentum; dragMomentum*=0.9;
-    galeriaNormalizeScroll();
-    if(Math.abs(dragMomentum)>0.3)requestAnimationFrame(dec);
-    else autoScroll=true;
-  }
-  requestAnimationFrame(dec);
-});
-
-galeriaOuter.addEventListener('mouseenter',()=>{ autoScroll=false; });
-galeriaOuter.addEventListener('mouseleave',()=>{ if(!isDragging) autoScroll=true; });
 
 // FORM → WhatsApp
 function handleSubmit(e){

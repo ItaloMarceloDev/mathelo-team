@@ -198,9 +198,11 @@
   .legend-dot.jj { background: rgba(150,0,180,0.9); }
   .legend-dot.kids { background: rgba(50,150,220,0.9); }
   .horarios-tabs { display: flex; gap: 4px; margin: 40px 0 24px; }
-  .htab { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; padding: 10px 22px; background: var(--black-light); border: 1px solid rgba(255,255,255,0.06); color: var(--gray); cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); user-select: none; }
+  .htab { display: inline-flex; align-items: center; gap: 10px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; padding: 10px 22px; background: var(--black-light); border: 1px solid rgba(255,255,255,0.06); color: var(--gray); cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); user-select: none; line-height: 1; }
   .htab.active { background: var(--red); color: var(--white); border-color: var(--red); }
   .htab:hover:not(.active) { color: var(--white); border-color: rgba(204,0,0,0.4); }
+  .htab-icon { width: 18px; height: 18px; object-fit: contain; display: block; flex-shrink: 0; opacity: 0.75; transition: opacity 0.2s, filter 0.2s; }
+  .htab.active .htab-icon, .htab:hover .htab-icon { opacity: 1; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4)); }
   .htab-content { display: none; }
   .htab-content.active { display: block; animation: fadeIn 0.3s ease; }
   @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
@@ -210,7 +212,8 @@
   .horario-table td { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.04); border-right: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
   .horario-table tr:hover td { background: rgba(255,255,255,0.02); }
   .time-col { font-family: 'Barlow Condensed', sans-serif; font-size: 14px; color: var(--gray); letter-spacing: 1px; white-space: nowrap; }
-  .slot-pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; border-radius: 3px; white-space: nowrap; margin: 2px 0; }
+  .slot-pill { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; font-family: 'Barlow Condensed', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 1px; border-radius: 3px; white-space: nowrap; margin: 2px 0; line-height: 1; }
+  .slot-pill img { width: 14px; height: 14px; object-fit: contain; display: block; flex-shrink: 0; opacity: 0.95; }
   .slot-am { background: rgba(204,0,0,0.18); color: #ff8080; border-left: 2px solid var(--red); }
   .slot-jj { background: rgba(150,0,180,0.18); color: #e080ff; border-left: 2px solid #9600b4; }
   .slot-kids { background: rgba(30,120,220,0.18); color: #70bfff; border-left: 2px solid #1878dc; }
@@ -283,9 +286,7 @@
     margin-top: 40px;
     overflow: hidden;
     position: relative;
-    cursor: grab;
   }
-  .galeria-outer:active { cursor: grabbing; }
   .galeria-outer::before, .galeria-outer::after {
     content: ''; position: absolute; top:0; bottom:0; width: 80px; z-index: 2; pointer-events: none;
   }
@@ -295,9 +296,21 @@
     display: flex;
     gap: 12px;
     padding: 12px 0;
+    width: max-content;
     will-change: transform;
+    transform: translate3d(0, 0, 0);
     user-select: none;
     -webkit-user-select: none;
+    animation: galeriaScroll var(--galeria-duration, 60s) linear infinite;
+  }
+  .galeria-track.is-paused { animation-play-state: paused; }
+  @keyframes galeriaScroll {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(calc(var(--galeria-cycle, 50%) * -1), 0, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .galeria-track { animation: none; transform: none; }
+    .galeria-outer { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   }
   .galeria-item {
     flex-shrink: 0;
@@ -391,6 +404,13 @@
   @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
 
   /* ─── RESPONSIVE ─── */
+  @media (hover: none) {
+    /* Em dispositivos sem hover (mobile/tablet), mostra a overlay completa o tempo todo */
+    .prof-overlay { transform: translateY(0); }
+    .prof-desc { opacity: 1; transition: none; }
+    .prof-card::after { display: none; }
+    .prof-card:hover .prof-img img { transform: none; }
+  }
   @media (max-width: 1024px) {
     section { padding: 80px 32px; }
     #sobre { grid-template-columns: 1fr; gap: 40px; }
@@ -402,6 +422,12 @@
     .banner-cta { padding: 40px 32px; flex-direction: column; text-align: center; }
     .horario-table th, .horario-table td { padding: 10px 10px; font-size: 12px; }
     .prof-grid { grid-template-columns:repeat(2,1fr); }
+    .prof-overlay {
+      transform: translateY(0);
+      padding: 22px 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.94) 0%, rgba(0,0,0,0.7) 50%, transparent 100%);
+    }
+    .prof-desc { opacity: 1; transition: none; }
   }
   @media (max-width: 768px) {
     .hero-orb { width: 300px; height: 300px; }
@@ -409,6 +435,10 @@
     .galeria-item { width: clamp(240px, 48vw, 340px); }
     .galeria-outer::before,.galeria-outer::after { width: 40px; }
     .prof-arrow { width: 38px; height: 38px; font-size: 16px; }
+    .prof-name { font-size: 22px; letter-spacing: 1.5px; line-height: 1.1; word-break: break-word; }
+    .prof-role { font-size: 12px; letter-spacing: 1.5px; line-height: 1.3; }
+    .prof-desc { font-size: 12.5px; margin-top: 8px; line-height: 1.55; }
+    .prof-overlay { padding: 20px 18px; }
   }
   @media (max-width: 640px) {
     section { padding: 60px 20px; }
@@ -419,7 +449,11 @@
     .wa-float span { display: none; }
     .wa-float { padding: 14px; border-radius: 50%; }
     nav { padding: 14px 20px; }
-    .prof-grid { grid-template-columns:1fr; }
+    .prof-grid { grid-template-columns:1fr; gap: 20px; max-width: 380px; margin-left: auto; margin-right: auto; }
+    .prof-img { aspect-ratio: 4/5; }
+    .prof-name { font-size: 24px; letter-spacing: 2px; }
+    .prof-role { font-size: 12.5px; }
+    .prof-desc { font-size: 13px; }
     .galeria-item { width: clamp(220px, 68vw, 300px); }
     .galeria-outer::before,.galeria-outer::after { width: 24px; }
     .horario-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -431,4 +465,5 @@
   @media (max-width: 400px) {
     .hero-title { font-size: clamp(56px,18vw,80px); }
     .galeria-item { width: clamp(200px, 80vw, 260px); }
+    .prof-name { font-size: 22px; letter-spacing: 1.5px; }
   }
