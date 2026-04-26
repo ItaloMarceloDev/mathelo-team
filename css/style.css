@@ -17,17 +17,6 @@
     color: var(--white);
     font-family: 'Barlow', sans-serif;
     overflow-x: hidden;
-    cursor: crosshair;
-  }
-
-  /* ─── CURSOR ─── */
-  .cursor {
-    width: 12px; height: 12px;
-    background: var(--red); border-radius: 50%;
-    position: fixed; pointer-events: none; z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: transform 0.1s, width 0.2s, height 0.2s;
-    mix-blend-mode: difference;
   }
 
   /* ─── WHATSAPP FLOAT ─── */
@@ -225,7 +214,9 @@
   #planos { background: var(--black); overflow: hidden; position: relative; }
   #planos::before { content: 'PLANOS'; position: absolute; font-family: 'Bebas Neue', sans-serif; font-size: 220px; letter-spacing: 20px; color: rgba(204,0,0,0.03); top: 50%; left: 50%; transform: translate(-50%,-50%); white-space: nowrap; pointer-events: none; }
   .planos-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 60px; position: relative; z-index: 1; }
-  .plano-card { background: var(--black-light); padding: 40px 32px; border: 1px solid rgba(255,255,255,0.05); position: relative; transition: transform 0.3s, border-color 0.3s; clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); }
+  .planos-grid { align-items: stretch; }
+  .plano-card { background: var(--black-light); padding: 40px 32px; border: 1px solid rgba(255,255,255,0.05); position: relative; transition: transform 0.3s, border-color 0.3s; clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px)); display: flex; flex-direction: column; }
+  .plano-card .plano-btn { margin-top: auto; }
   .plano-card:hover { transform: translateY(-8px); border-color: rgba(204,0,0,0.4); }
   .plano-card.destaque { background: linear-gradient(135deg, rgba(204,0,0,0.2) 0%, var(--black-light) 50%); border-color: var(--red); }
   .plano-badge { position: absolute; top: -1px; right: 32px; background: var(--red); font-family: 'Barlow Condensed', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 16px; }
@@ -234,15 +225,21 @@
   .plano-price sup { font-size: 28px; vertical-align: top; margin-top: 14px; display: inline-block; }
   .plano-price sub { font-family: 'Barlow', sans-serif; font-size: 16px; color: var(--gray); font-weight: 300; }
   .plano-divider { width: 100%; height: 1px; background: rgba(255,255,255,0.07); margin: 24px 0; }
-  .plano-features { list-style: none; }
+  .plano-features { list-style: none; margin-bottom: 32px; }
   .plano-features li { font-size: 14px; color: var(--gray-light); padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 10px; }
   .plano-features li::before { content: '▸'; color: var(--red); font-size: 12px; flex-shrink: 0; }
   .plano-features li.off { color: rgba(255,255,255,0.2); text-decoration: line-through; }
   .plano-features li.off::before { opacity: 0.2; }
-  .plano-btn { display: block; margin-top: 32px; text-align: center; padding: 14px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px; text-decoration: none; border: 1px solid rgba(204,0,0,0.4); color: var(--red); transition: background 0.2s, color 0.2s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); }
+  .plano-btn { display: block; text-align: center; padding: 14px; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px; text-decoration: none; border: 1px solid rgba(204,0,0,0.4); color: var(--red); transition: background 0.2s, color 0.2s; clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%); }
   .plano-btn:hover { background: var(--red); color: var(--white); }
   .plano-card.destaque .plano-btn { background: var(--red); color: var(--white); border-color: var(--red); }
   .plano-card.destaque .plano-btn:hover { background: var(--red-bright); }
+  .plano-freq-toggle { display: inline-flex; align-self: flex-start; margin-top: 8px; padding: 4px; background: rgba(0,0,0,0.4); border: 1px solid rgba(204,0,0,0.45); gap: 2px; }
+  .plano-freq-toggle .freq-opt { background: transparent; border: none; color: var(--gray-light); font-family: 'Barlow Condensed', sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 7px 16px; cursor: pointer; transition: background 0.2s, color 0.2s; line-height: 1; }
+  .plano-freq-toggle .freq-opt:hover { color: var(--white); }
+  .plano-freq-toggle .freq-opt.active { background: var(--red); color: var(--white); }
+  .plano-price-value { transition: opacity 0.18s; display: inline-block; }
+  .plano-price-value.swap { opacity: 0; }
 
   /* ─── BANNER CTA ─── */
   .banner-cta { background: var(--red); padding: 60px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; position: relative; overflow: hidden; }
@@ -295,21 +292,29 @@
   }
   .galeria-item {
     flex-shrink: 0;
-    width: clamp(200px, 26vw, 300px);
-    height: clamp(240px, 30vw, 360px);
+    width: clamp(280px, 32vw, 420px);
+    aspect-ratio: 4 / 3;
+    margin: 0;
     background: var(--black-light);
-    display: flex; align-items: center; justify-content: center;
-    font-size: clamp(50px,8vw,80px);
     overflow: hidden;
     position: relative;
     transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s;
     border: 1px solid rgba(255,255,255,0.04);
+  }
+  .galeria-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
   }
   .galeria-item::before {
     content: '';
     position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(204,0,0,0.15) 0%, transparent 60%);
     opacity: 0; transition: opacity 0.35s;
+    z-index: 2;
+    pointer-events: none;
   }
   .galeria-item:hover {
     transform: translateY(-10px) scale(1.03);
@@ -327,6 +332,7 @@
     padding: 32px 16px 14px;
     opacity: 0; transform: translateY(8px);
     transition: opacity 0.3s, transform 0.3s;
+    z-index: 3;
   }
   .galeria-item:hover::after { opacity: 1; transform: translateY(0); }
 
@@ -375,13 +381,6 @@
   .stagger.visible > *:nth-child(6) { opacity:1; transform:translateY(0); transition-delay:0.5s; }
   @keyframes fadeUp { to { opacity:1; transform:translateY(0); } }
 
-  .glitch { position: relative; display: inline-block; }
-  .glitch:hover::before, .glitch:hover::after { content: attr(data-text); position: absolute; top:0; left:0; width:100%; height:100%; font-family:inherit; font-size:inherit; }
-  .glitch:hover::before { color:var(--red-bright); animation:glitch1 0.3s infinite; clip-path:polygon(0 0,100% 0,100% 35%,0 35%); }
-  .glitch:hover::after { color:#00FFFF; animation:glitch2 0.3s infinite; clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%); opacity:0.5; }
-  @keyframes glitch1 { 0%,100%{transform:translate(0)} 25%{transform:translate(-3px,2px)} 75%{transform:translate(3px,-2px)} }
-  @keyframes glitch2 { 0%,100%{transform:translate(0)} 25%{transform:translate(3px,-2px)} 75%{transform:translate(-3px,2px)} }
-
   /* ─── RESPONSIVE ─── */
   @media (max-width: 1024px) {
     section { padding: 80px 32px; }
@@ -398,7 +397,7 @@
   @media (max-width: 768px) {
     .hero-orb { width: 300px; height: 300px; }
     .hero-orb2 { width: 160px; height: 160px; }
-    .galeria-item { width: clamp(150px,55vw,230px); height: clamp(190px,48vw,270px); }
+    .galeria-item { width: clamp(240px, 48vw, 340px); }
     .galeria-outer::before,.galeria-outer::after { width: 40px; }
     .prof-arrow { width: 38px; height: 38px; font-size: 16px; }
   }
@@ -412,7 +411,7 @@
     .wa-float { padding: 14px; border-radius: 50%; }
     nav { padding: 14px 20px; }
     .prof-grid { grid-template-columns:1fr; }
-    .galeria-item { width: clamp(130px,68vw,200px); height: clamp(160px,55vw,240px); font-size: 38px; }
+    .galeria-item { width: clamp(220px, 68vw, 300px); }
     .galeria-outer::before,.galeria-outer::after { width: 24px; }
     .horario-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .banner-cta { padding: 32px 20px; }
@@ -422,5 +421,5 @@
   }
   @media (max-width: 400px) {
     .hero-title { font-size: clamp(56px,18vw,80px); }
-    .galeria-item { width: clamp(120px,74vw,170px); }
+    .galeria-item { width: clamp(200px, 80vw, 260px); }
   }
