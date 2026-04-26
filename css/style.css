@@ -430,8 +430,27 @@
     .prof-desc { opacity: 1; transition: none; }
   }
   @media (max-width: 768px) {
-    .hero-orb { width: 300px; height: 300px; }
-    .hero-orb2 { width: 160px; height: 160px; }
+    /* Hero estático em mobile (sem partículas, sem orbs magnéticos, sem parallax do hex) */
+    #heroCanvas, .hero-orb, .hero-orb2 { display: none !important; }
+    .hero-hex { animation: none; transition: none; background-position: 0 0 !important; }
+    /* Fundo gradiente estático seguindo a paleta da academia (vermelho + preto) */
+    .hero-bg {
+      background:
+        radial-gradient(ellipse 80% 55% at 50% 22%, rgba(204,0,0,0.32) 0%, transparent 60%),
+        radial-gradient(ellipse 110% 70% at 50% 100%, rgba(139,0,0,0.40) 0%, transparent 65%),
+        linear-gradient(180deg, #0A0A0A 0%, #160404 55%, #0A0A0A 100%);
+    }
+    /* Scroll indicator: cancela a animação fadeUp que sobrescrevia o translateX(-50%)
+       e mantém o elemento perfeitamente centralizado horizontalmente. */
+    .hero-scroll {
+      bottom: 28px;
+      gap: 6px;
+      opacity: 1;
+      animation: none;
+      transform: translateX(-50%);
+    }
+    .hero-scroll span { font-size: 10px; letter-spacing: 2.5px; }
+    .scroll-line { height: 36px; }
     .galeria-item { width: clamp(240px, 48vw, 340px); }
     .galeria-outer::before,.galeria-outer::after { width: 40px; }
     .prof-arrow { width: 38px; height: 38px; font-size: 16px; }
@@ -464,6 +483,9 @@
   }
   @media (max-width: 400px) {
     .hero-title { font-size: clamp(56px,18vw,80px); }
+    .hero-scroll { bottom: 20px; }
+    .hero-scroll span { font-size: 9px; letter-spacing: 2px; }
+    .scroll-line { height: 28px; }
     .galeria-item { width: clamp(200px, 80vw, 260px); }
     .prof-name { font-size: 22px; letter-spacing: 1.5px; }
   }

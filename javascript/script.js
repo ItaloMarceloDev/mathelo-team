@@ -8,93 +8,101 @@ const heroOrb  = document.getElementById('heroOrb');
 const heroOrb2 = document.getElementById('heroOrb2');
 const heroHex  = document.getElementById('heroHex');
 const heroCanvas = document.getElementById('heroCanvas');
-const ctx = heroCanvas.getContext('2d');
 
-// resize canvas
-function resizeCanvas(){
-  heroCanvas.width  = heroEl.offsetWidth;
-  heroCanvas.height = heroEl.offsetHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
+// Em mobile (≤768px) deixamos o background do Hero estático: sem canvas/partículas,
+// sem orbs magnéticos e sem parallax do hex. Reduz drasticamente o uso de CPU/GPU
+// em dispositivos com menos recursos.
+const HERO_DESKTOP = window.matchMedia('(min-width: 769px)').matches;
 
-// particles
-const particles = [];
-const PARTICLE_COUNT = window.innerWidth < 640 ? 30 : 60;
-for(let i=0;i<PARTICLE_COUNT;i++){
-  particles.push({
-    x: Math.random()*heroCanvas.width,
-    y: Math.random()*heroCanvas.height,
-    vx:(Math.random()-0.5)*0.3,
-    vy:(Math.random()-0.5)*0.3,
-    size: Math.random()*1.5+0.4,
-    alpha: Math.random()*0.5+0.1,
-    hue: Math.random()<0.7?0:20,
-  });
-}
-let heroMx=heroCanvas.width/2, heroMy=heroCanvas.height/2;
+if (HERO_DESKTOP && heroCanvas) {
+  const ctx = heroCanvas.getContext('2d');
 
-function drawParticles(){
-  ctx.clearRect(0,0,heroCanvas.width,heroCanvas.height);
-  particles.forEach(p=>{
-    const dx=heroMx-p.x, dy=heroMy-p.y;
-    const dist=Math.sqrt(dx*dx+dy*dy)||1;
-    const force=Math.min(120/dist,0.4);
-    p.vx += dx/dist*force*0.012;
-    p.vy += dy/dist*force*0.012;
-    p.vx*=0.98; p.vy*=0.98;
-    p.x+=p.vx; p.y+=p.vy;
-    if(p.x<-5) p.x=heroCanvas.width+5;
-    if(p.x>heroCanvas.width+5) p.x=-5;
-    if(p.y<-5) p.y=heroCanvas.height+5;
-    if(p.y>heroCanvas.height+5) p.y=-5;
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    ctx.fillStyle=`hsla(${p.hue},100%,55%,${p.alpha})`;
-    ctx.fill();
-  });
-  particles.forEach((a,i)=>{
-    particles.slice(i+1).forEach(b=>{
-      const dx=a.x-b.x,dy=a.y-b.y;
-      const d=Math.sqrt(dx*dx+dy*dy);
-      if(d<80){
-        ctx.beginPath();
-        ctx.moveTo(a.x,a.y);
-        ctx.lineTo(b.x,b.y);
-        ctx.strokeStyle=`rgba(204,0,0,${0.12*(1-d/80)})`;
-        ctx.lineWidth=0.5;
-        ctx.stroke();
-      }
+  // resize canvas
+  function resizeCanvas(){
+    heroCanvas.width  = heroEl.offsetWidth;
+    heroCanvas.height = heroEl.offsetHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // particles
+  const particles = [];
+  const PARTICLE_COUNT = 60;
+  for(let i=0;i<PARTICLE_COUNT;i++){
+    particles.push({
+      x: Math.random()*heroCanvas.width,
+      y: Math.random()*heroCanvas.height,
+      vx:(Math.random()-0.5)*0.3,
+      vy:(Math.random()-0.5)*0.3,
+      size: Math.random()*1.5+0.4,
+      alpha: Math.random()*0.5+0.1,
+      hue: Math.random()<0.7?0:20,
+    });
+  }
+  let heroMx=heroCanvas.width/2, heroMy=heroCanvas.height/2;
+
+  function drawParticles(){
+    ctx.clearRect(0,0,heroCanvas.width,heroCanvas.height);
+    particles.forEach(p=>{
+      const dx=heroMx-p.x, dy=heroMy-p.y;
+      const dist=Math.sqrt(dx*dx+dy*dy)||1;
+      const force=Math.min(120/dist,0.4);
+      p.vx += dx/dist*force*0.012;
+      p.vy += dy/dist*force*0.012;
+      p.vx*=0.98; p.vy*=0.98;
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<-5) p.x=heroCanvas.width+5;
+      if(p.x>heroCanvas.width+5) p.x=-5;
+      if(p.y<-5) p.y=heroCanvas.height+5;
+      if(p.y>heroCanvas.height+5) p.y=-5;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${p.hue},100%,55%,${p.alpha})`;
+      ctx.fill();
+    });
+    particles.forEach((a,i)=>{
+      particles.slice(i+1).forEach(b=>{
+        const dx=a.x-b.x,dy=a.y-b.y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<80){
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.strokeStyle=`rgba(204,0,0,${0.12*(1-d/80)})`;
+          ctx.lineWidth=0.5;
+          ctx.stroke();
+        }
+      });
+    });
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+
+  // orb + hex parallax on mouse
+  let orbRaf;
+  heroEl.addEventListener('mousemove',e=>{
+    const r=heroEl.getBoundingClientRect();
+    const x=e.clientX-r.left, y=e.clientY-r.top;
+    heroMx=x; heroMy=y;
+    cancelAnimationFrame(orbRaf);
+    orbRaf=requestAnimationFrame(()=>{
+      heroOrb.style.left=x+'px';
+      heroOrb.style.top=y+'px';
+      heroOrb2.style.left=x+'px';
+      heroOrb2.style.top=y+'px';
+      const nx=(x/r.width-0.5)*18, ny=(y/r.height-0.5)*18;
+      heroHex.style.backgroundPosition=`${nx}px ${ny}px`;
     });
   });
-  requestAnimationFrame(drawParticles);
-}
-drawParticles();
-
-// orb + hex parallax on mouse
-let orbRaf;
-heroEl.addEventListener('mousemove',e=>{
-  const r=heroEl.getBoundingClientRect();
-  const x=e.clientX-r.left, y=e.clientY-r.top;
-  heroMx=x; heroMy=y;
-  cancelAnimationFrame(orbRaf);
-  orbRaf=requestAnimationFrame(()=>{
-    heroOrb.style.left=x+'px';
-    heroOrb.style.top=y+'px';
-    heroOrb2.style.left=x+'px';
-    heroOrb2.style.top=y+'px';
-    const nx=(x/r.width-0.5)*18, ny=(y/r.height-0.5)*18;
-    heroHex.style.backgroundPosition=`${nx}px ${ny}px`;
+  heroEl.addEventListener('mouseleave',()=>{
+    heroOrb.style.left='50%'; heroOrb.style.top='50%';
+    heroOrb2.style.left='50%'; heroOrb2.style.top='50%';
+    heroHex.style.backgroundPosition='0px 0px';
+    heroMx=heroCanvas.width/2; heroMy=heroCanvas.height/2;
   });
-});
-heroEl.addEventListener('mouseleave',()=>{
   heroOrb.style.left='50%'; heroOrb.style.top='50%';
   heroOrb2.style.left='50%'; heroOrb2.style.top='50%';
-  heroHex.style.backgroundPosition='0px 0px';
-  heroMx=heroCanvas.width/2; heroMy=heroCanvas.height/2;
-});
-heroOrb.style.left='50%'; heroOrb.style.top='50%';
-heroOrb2.style.left='50%'; heroOrb2.style.top='50%';
+}
 
 // ─── SCROLL ANIMATIONS ───
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.12});
