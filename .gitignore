@@ -1,0 +1,51 @@
+# ─── Sistema operacional ───
+.DS_Store
+Thumbs.db
+desktop.ini
+*~
+*.swp
+
+# ─── Editores ───
+.vscode/
+.idea/
+*.code-workspace
+.history/
+
+# ─── Dependências (caso venha a usar) ───
+node_modules/
+package-lock.json
+yarn.lock
+.pnp.*
+bower_components/
+
+# ─── Build / cache ───
+dist/
+build/
+.cache/
+*.log
+*.log.*
+npm-debug.log*
+yarn-error.log*
+
+# ─── Variáveis de ambiente / segredos ───
+# NUNCA commitar tokens, chaves ou credenciais
+.env
+.env.*
+!.env.example
+secrets/
+credentials.json
+*.pem
+*.key
+*.crt
+*.p12
+config.local.*
+
+# ─── Backups ───
+*.bak
+*.backup
+*.orig
+
+# ─── Misc ───
+coverage/
+.tmp/
+tmp/
