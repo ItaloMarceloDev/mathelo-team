@@ -138,7 +138,7 @@
   .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(42px, 6vw, 72px); line-height: 1; letter-spacing: 2px; }
 
   /* ─── SOBRE ─── */
-  #sobre { background: var(--black-mid); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; overflow: hidden; }
+  #sobre { background: var(--black); display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; overflow: hidden; }
 
   /* LOGO SLIDE-IN ESPECIAL */
   .sobre-logo-wrap {
@@ -305,12 +305,13 @@
     transform: translate3d(0, 0, 0);
     user-select: none;
     -webkit-user-select: none;
-    animation: galeriaScroll var(--galeria-duration, 60s) linear infinite;
+    /* 9 itens = 3 grupos × 3 fotos. Desloca 1 grupo (33.333%) para loop infinito. */
+    animation: galeriaScroll 30s linear infinite;
   }
   .galeria-track.is-paused { animation-play-state: paused; }
   @keyframes galeriaScroll {
     from { transform: translate3d(0, 0, 0); }
-    to   { transform: translate3d(calc(var(--galeria-cycle, 50%) * -1), 0, 0); }
+    to   { transform: translate3d(calc(-100% / 3), 0, 0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .galeria-track { animation: none; transform: none; }
@@ -367,7 +368,7 @@
      Itens 1 e 2 ficam full-bleed (1=fundo, 2=frente com conteúdo visível).
      Miniaturas posicionadas com left a partir de 50%.
      Animação via reordenação DOM + :nth-child + transition. Sem libs. */
-  #estrutura { background: var(--black); padding: 100px 60px; }
+  #estrutura { background: var(--black-mid); padding: 100px 60px; }
   .estrutura-header { max-width: 720px; margin-bottom: 40px; }
   .estrutura-subtitle { margin-top: 12px; color: var(--gray-light); font-size: 16px; line-height: 1.6; }
 
